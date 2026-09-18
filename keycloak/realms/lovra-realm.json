@@ -1,0 +1,68 @@
+{
+  "realm": "lovra",
+  "enabled": true,
+  "users": [
+    {
+      "username": "laismansano",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Lais Mansano",
+      "lastName": "Alexandre Pereira",
+      "email": "laismansano2@gmail.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "development",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ADMIN"]
+    }, 
+	{
+	      "username": "joaocruz",
+	      "enabled": true,
+	      "emailVerified": true,
+	      "firstName": "João Gabriel",
+	      "lastName": "Carvalho Lopes da Cruz",
+	      "email": "support@lovra.com",
+	      "credentials": [
+	        {
+	          "type": "password",
+	          "value": "development",
+	          "temporary": false
+	        }
+	      ],
+	      "realmRoles": ["USER"]
+	}
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "ADMIN"
+      },
+	  {
+	    "name": "USER"
+	  }
+    ]
+  },
+  
+  "clients": [
+	{
+	  "clientId": "lovra-app",
+	  "enabled": true,
+	  "protocol": "openid-connect",
+	  "publicClient": true,
+	  "bearerOnly": false,
+	  "standardFlowEnabled": true,
+	  "directAccessGrantsEnabled": false,
+	  "serviceAccountsEnabled": false,
+	  "authorizationServicesEnabled": false,
+	  "redirectUris": ["http://localhost:5173/*"],
+	  "webOrigins": ["http://localhost:5173"],
+	  "attributes": {
+	    "pkce.code.challenge.method": "S256"
+	  }
+	}
+]
+
+}
