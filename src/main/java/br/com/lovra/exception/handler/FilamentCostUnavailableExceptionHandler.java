@@ -1,6 +1,6 @@
 package br.com.lovra.exception.handler;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Collections;
 
 import br.com.lovra.exception.FilamentCostUnavailableException;
@@ -19,7 +19,7 @@ public class FilamentCostUnavailableExceptionHandler implements ExceptionMapper<
                         "Unprocessable Content",
                         exception.getMessage(),
                         422, 
-                        LocalDateTime.now(), 
+                        Instant.now(), 
                         Collections.emptyMap()))
                 .build();
 	}

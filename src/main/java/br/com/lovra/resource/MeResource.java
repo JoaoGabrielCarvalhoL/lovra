@@ -2,7 +2,7 @@ package br.com.lovra.resource;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import br.com.lovra.resource.dto.CurrentUserResponse;
+import br.com.lovra.dto.user.CurrentUserResponse;
 import io.quarkus.security.Authenticated;
 import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.ws.rs.GET;
