@@ -1,6 +1,6 @@
 package br.com.lovra.exception.response;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,7 +11,7 @@ public record ExceptionResponse(
 		String title, 
 		String message, 
 		Integer status, 
-		LocalDateTime timestamp, 
+		Instant occurredAt, 
 		Map<String, String> errors) {
 
 }

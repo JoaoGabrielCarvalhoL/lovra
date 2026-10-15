@@ -1,4 +1,4 @@
-package br.com.lovra.resource.dto;
+package br.com.lovra.dto.user;
 
 import java.util.Set;
 
