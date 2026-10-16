@@ -229,6 +229,35 @@ class FilamentSpoolServiceImplTest {
 		this.filamentSpoolService.update(filamentSpoolId, updateFilamentSpoolRequest);
 	
 		Mockito.verify(this.filamentSpoolRepository).findByIdOptional(filamentSpoolId);
+		Mockito.verify(this.filamentSpoolMapper).updateFilamentSpool(updateFilamentSpoolRequest, filamentSpool);
+    }
+    
+    @Test
+    void shouldDeleteFilamentSpoolSuccessfully() {
+        UUID filamentSpoolId = UUID.randomUUID();
+
+        FilamentSpool filamentSpool = Mockito.mock(FilamentSpool.class);
+
+        Mockito.when(filamentSpoolRepository.findByIdOptional(filamentSpoolId)).thenReturn(Optional.of(filamentSpool));
+        filamentSpoolService.delete(filamentSpoolId);
+
+        Mockito.verify(filamentSpoolRepository).findByIdOptional(filamentSpoolId);
+        Mockito.verify(filamentSpoolRepository).delete(filamentSpool);
+    }
+    
+    @Test
+    void shouldThrowExceptionWhenDeletingNonexistentFilamentSpool() {
+        UUID filamentSpoolId = UUID.randomUUID();
+
+        Mockito.when(filamentSpoolRepository.findByIdOptional(filamentSpoolId)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(
+                FilamentSpoolNotFoundException.class,
+                () -> filamentSpoolService.delete(filamentSpoolId));
+
+        Mockito.verify(filamentSpoolRepository).findByIdOptional(filamentSpoolId);
+
+        Mockito.verify(filamentSpoolRepository, Mockito.never()).delete(Mockito.any(FilamentSpool.class));
     }
 	
 
