@@ -1,9 +1,11 @@
 # Lovra
 
+[![CI](https://github.com/JoaoGabrielCarvalhoL/lovra/actions/workflows/ci.yml/badge.svg)](https://github.com/JoaoGabrielCarvalhoL/lovra/actions/workflows/ci.yml)
 ![Java](https://img.shields.io/badge/Java-25-blue)
 ![Quarkus](https://img.shields.io/badge/Quarkus-3.39.4-blue)
 ![Status](https://img.shields.io/badge/status-under%20development-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
+
 
 ## About Lovra
 
