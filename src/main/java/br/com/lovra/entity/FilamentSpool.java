@@ -16,7 +16,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "tb_filament_spool")
@@ -31,11 +30,9 @@ public class FilamentSpool {
 	private Filament filament;
 	
 	@Column(nullable = false, precision = 12, scale = 2)
-	@Positive
 	private BigDecimal purchasePrice;
 	
 	@Column(nullable = false, precision = 12, scale = 2)
-	@Positive
 	private BigDecimal initialWeightInGrams; 
 	
 	@Column(nullable = false)
@@ -49,9 +46,8 @@ public class FilamentSpool {
 	
 	public FilamentSpool() {}
 	
-	public FilamentSpool(Filament filament, @Positive BigDecimal purchasePrice,
-			@Positive BigDecimal initialWeightInGrams, LocalDate purchasedAt) {
-		super();
+	public FilamentSpool(Filament filament, BigDecimal purchasePrice,
+			BigDecimal initialWeightInGrams, LocalDate purchasedAt) {
 		this.filament = filament;
 		this.purchasePrice = purchasePrice;
 		this.initialWeightInGrams = initialWeightInGrams;

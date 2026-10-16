@@ -1,4 +1,4 @@
-package br.com.lovra.resource;
+package br.com.lovra.resource.impl;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
