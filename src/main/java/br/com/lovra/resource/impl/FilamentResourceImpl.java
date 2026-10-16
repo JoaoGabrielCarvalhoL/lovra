@@ -22,7 +22,7 @@ public class FilamentResourceImpl implements FilamentResource {
 	private final FilamentService filamentService;
 	
 	@Context
-    UriInfo uriInfo;
+    private UriInfo uriInfo;
 	
 	public FilamentResourceImpl(FilamentService filamentService) {
 		this.filamentService = filamentService;

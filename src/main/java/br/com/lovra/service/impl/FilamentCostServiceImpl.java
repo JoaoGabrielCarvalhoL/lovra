@@ -38,7 +38,7 @@ public class FilamentCostServiceImpl implements FilamentCostService {
 			.orElseThrow(() -> new FilamentNotFoundException("Filament not found with id: " + id)); 
 		
 		logger.info("Getting filament spolls by filament id: {}", id);
-		List<FilamentSpool> filamentSpools= this.filamentSpoolRepository.findByFilamentId(id);
+		List<FilamentSpool> filamentSpools = this.filamentSpoolRepository.findByFilamentId(id);
 		
 		if (filamentSpools.isEmpty()) {
 			throw new FilamentCostUnavailableException("Generic Exception...EmptyList"); 
