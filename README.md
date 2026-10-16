@@ -1,89 +1,106 @@
-# lovra
+# Lovra
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+![Java](https://img.shields.io/badge/Java-25-blue)
+![Quarkus](https://img.shields.io/badge/Quarkus-3.39.4-blue)
+![Status](https://img.shields.io/badge/status-under%20development-orange)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## About Lovra
 
-## Running the application in dev mode
+Lovra is an evolving platform for managing 3D printing operations and related workflows. It began as a practical solution to real operational needs and is being developed with an emphasis on maintainability, sound domain modeling, and continuous improvement.
 
-You can run your application in dev mode that enables live coding using:
+This repository contains the **backend API**. The project is under active development: its domain model, business rules, and architecture are intentionally subject to change as requirements emerge. The current implementation is a foundation, not a finalized product or a fixed definition of its future scope.
 
-```shell script
-./mvnw quarkus:dev
+## Tech Stack
+
+- **Java 25** and **Quarkus 3.39.4**
+- **Maven** for builds and dependency management
+- **PostgreSQL**, **Hibernate ORM**, and **Panache** for persistence
+- **MapStruct** and **Jakarta Bean Validation** for mapping and validation
+- **Keycloak** and **OpenID Connect** for authentication
+- **SmallRye OpenAPI**, **SmallRye Health**, and **Micrometer/Prometheus** for API documentation and operational visibility
+- **JUnit**, **Mockito**, and Quarkus testing tools
+- **Docker Compose** for local identity infrastructure
+
+## Architecture
+
+The backend follows a layered approach, separating REST resources, application services, persistence repositories, domain entities, and API contracts (DTOs). MapStruct handles entity/DTO mapping, while domain-specific exceptions provide structured error handling.
+
+The architecture and persistence model are evolving. Database migration tooling is included in the project, but versioned migrations are not yet part of the current development workflow.
+
+## Getting Started
+
+### Prerequisites
+
+- JDK 25
+- Maven
+- PostgreSQL for the application database
+- Docker with Docker Compose
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/JoaoGabrielCarvalhoL/lovra.git
+cd lovra
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+### 2. Configure local environment
 
-## Packaging and running the application
+The application expects these environment variables:
 
-The application can be packaged using:
+| Variable | Purpose |
+| --- | --- |
+| `POSTGRES_LOCAL_URL` | JDBC URL for the application database |
+| `POSTGRES_LOCAL_USERNAME` | Application database username |
+| `POSTGRES_LOCAL_PASSWORD` | Application database password |
+| `OIDC_AUTH_SERVER` | Keycloak realm URL |
+| `OIDC_CLIENT_ID` | OIDC client identifier |
 
-```shell script
-./mvnw package
+The Docker Compose services require `KEYCLOAK_DB_NAME`, `KEYCLOAK_DB_USER`, `KEYCLOAK_DB_PASSWORD`, `KEYCLOAK_ADMIN_USER`, and `KEYCLOAK_ADMIN_PASSWORD`. Configure these locally (for example, with a non-committed Compose `.env` file). Never commit credentials.
+
+The application PostgreSQL database is **not** provisioned by this Compose file; create and configure it separately. Keycloak imports realm configuration from `./keycloak/realms`.
+
+### 3. Start Keycloak
+
+```bash
+docker compose up -d
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+Keycloak is exposed at `http://localhost:8081` in the current local setup.
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+### 4. Run the API
 
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+```bash
+mvn quarkus:dev
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+The API runs at `http://localhost:8080` by default.
 
-## Creating a native executable
+> **Development data warning:** The development profile currently uses Hibernate's `drop-and-create` schema strategy. Starting the application may delete and recreate application tables. Use a disposable development database; never point this profile at data you need to retain.
 
-You can create a native executable using:
+## API Documentation & Testing
 
-```shell script
-./mvnw package -Dnative
+With the API running in development mode:
+
+- **Swagger UI:** `http://localhost:8080/q/swagger-ui`
+- **OpenAPI specification:** `http://localhost:8080/q/openapi`
+
+Protected endpoints require a valid access token issued by the configured Keycloak realm. Refer to the generated OpenAPI specification for current routes, request schemas, and responses.
+
+Run the unit tests:
+
+```bash
+mvn clean test
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+Run the Maven verification lifecycle:
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+```bash
+mvn clean verify
 ```
 
-You can then execute your native executable with: `./target/lovra-1.0.0-SNAPSHOT-runner`
+Integration testing with isolated infrastructure (including Testcontainers) is planned for a later stage. The commands above do not imply that an integration test suite is already in place.
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+## License
 
-## Related Guides
-
-- Flyway ([guide](https://quarkus.io/guides/flyway)): Handle your database schema migrations
-- Hibernate Validator ([guide](https://quarkus.io/guides/validation)): Bean validation using Hibernate Validator and Jakarta Validation annotations
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Generate OpenAPI schemas and serve Swagger UI for REST API documentation
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- OpenID Connect ([guide](https://quarkus.io/guides/security-openid-connect)): Secure applications with OpenID Connect and OAuth 2.0 using bearer tokens and authorization code flow
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplified JPA/Hibernate data access layer with active record and repository patterns
-- SmallRye Health ([guide](https://quarkus.io/guides/smallrye-health)): Monitor service health
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
-
-## Provided Code
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
-
-### SmallRye Health
-
-Monitor your application's health using SmallRye Health
-
-[Related guide section...](https://quarkus.io/guides/smallrye-health)
+Lovra is licensed under the [MIT License](LICENSE).
