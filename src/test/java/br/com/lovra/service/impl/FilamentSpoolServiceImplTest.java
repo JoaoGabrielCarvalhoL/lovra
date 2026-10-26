@@ -53,7 +53,7 @@ class FilamentSpoolServiceImplTest {
     	
     	Filament filament = new Filament("PLA Black Silk", "Voolt3D", "Black", FilamentType.PLA);
     	FilamentSpool filamentSpool = new FilamentSpool(filament, new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
-    	FilamentSpoolResponse filamentSpoolResponse = new FilamentSpoolResponse(filamentSpoolId, filamentId, new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
+    	FilamentSpoolResponse filamentSpoolResponse = new FilamentSpoolResponse(filamentSpoolId, filamentId, new BigDecimal("100.00"), new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
     	CreateFilamentSpoolRequest createFilamentSpoolRequest = new CreateFilamentSpoolRequest(new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
     	
     	Mockito.when(this.filamentRepository.findByIdOptional(filamentId)).thenReturn(Optional.of(filament));
@@ -86,7 +86,7 @@ class FilamentSpoolServiceImplTest {
     	UUID filamentId = UUID.randomUUID();
     	Filament filament = new Filament("PLA Black Silk", "Voolt3D", "Black", FilamentType.PLA);
     	FilamentSpool filamentSpool = new FilamentSpool(filament, new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
-    	FilamentSpoolResponse filamentSpoolResponse = new FilamentSpoolResponse(filamentSpoolId, filamentId, new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
+    	FilamentSpoolResponse filamentSpoolResponse = new FilamentSpoolResponse(filamentSpoolId, filamentId, new BigDecimal("100.00"), new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
     	Mockito.when(filamentSpoolRepository.findByIdOptional(filamentSpoolId)).thenReturn(Optional.of(filamentSpool));
     	Mockito.when(this.filamentSpoolMapper.toFilamentSpoolResponse(filamentSpool)).thenReturn(filamentSpoolResponse);
     	
@@ -132,6 +132,7 @@ class FilamentSpoolServiceImplTest {
             filamentId,
             new BigDecimal("100.00"),
             new BigDecimal("1000.00"),
+            new BigDecimal("100.00"),
             LocalDate.of(2026, 9, 1));
 
         @SuppressWarnings("unchecked")
@@ -221,7 +222,7 @@ class FilamentSpoolServiceImplTest {
     	
     	Filament filament = new Filament("PLA Black Silk", "Voolt3D", "Black", FilamentType.PLA);
     	FilamentSpool filamentSpool = new FilamentSpool(filament, new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
-    	UpdateFilamentSpoolRequest updateFilamentSpoolRequest = new UpdateFilamentSpoolRequest(new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
+    	UpdateFilamentSpoolRequest updateFilamentSpoolRequest = new UpdateFilamentSpoolRequest(new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1), new BigDecimal("100.00"));
     	
     	Mockito.when(this.filamentSpoolRepository.findByIdOptional(filamentSpoolId)).thenReturn(Optional.of(filamentSpool));
 		Mockito.doNothing().when(this.filamentSpoolMapper).updateFilamentSpool(updateFilamentSpoolRequest, filamentSpool);

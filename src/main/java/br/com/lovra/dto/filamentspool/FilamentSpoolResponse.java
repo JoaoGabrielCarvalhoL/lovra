@@ -9,6 +9,7 @@ public record FilamentSpoolResponse(
 	    UUID filamentId,
 	    BigDecimal purchasePrice,
 	    BigDecimal initialWeightInGrams,
+	    BigDecimal remainingWeightInGrams,
 	    LocalDate purchasedAt) {
 
 }

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public record UpdateFilamentSpoolRequest(
     @NotNull(message = "The field purchasePrice cannot be null.")
@@ -13,11 +14,15 @@ public record UpdateFilamentSpoolRequest(
     BigDecimal purchasePrice,
 
     @NotNull(message = "The field initialWeightInGrams cannot be null.")
-    @Positive@Positive(message = "The initialWeightInGrams field only accepts positive values.")
+    @Positive(message = "The initialWeightInGrams field only accepts positive values.")
     BigDecimal initialWeightInGrams,
 
     @NotNull(message = "The field purchasedAt cannot be null.")
     @PastOrPresent(message = "The purchasedAt field only accepts dates in the present and past tenses.")
-    LocalDate purchasedAt
+    LocalDate purchasedAt, 
+    
+    @NotNull(message = "The field remainingWeightInGrams cannot be null.")
+    @PositiveOrZero(message = "The remainingWeightInGrams field cannot be negative.")    
+    BigDecimal remainingWeightInGrams
 
 ) {}

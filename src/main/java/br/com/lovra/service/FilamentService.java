@@ -17,4 +17,5 @@ public interface FilamentService {
 
 	FilamentResponse update(final UUID id, final UpdateFilamentRequest request);
 
+	void delete(final UUID id);
 }

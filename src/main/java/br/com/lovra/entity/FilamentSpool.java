@@ -35,6 +35,9 @@ public class FilamentSpool {
 	@Column(nullable = false, precision = 12, scale = 2)
 	private BigDecimal initialWeightInGrams; 
 	
+	@Column(nullable = false, precision = 12, scale = 2)
+	private BigDecimal remainingWeightInGrams;
+	
 	@Column(nullable = false)
 	private LocalDate purchasedAt;
 	
@@ -52,6 +55,14 @@ public class FilamentSpool {
 		this.purchasePrice = purchasePrice;
 		this.initialWeightInGrams = initialWeightInGrams;
 		this.purchasedAt = purchasedAt;
+		this.purchasedAt = purchasedAt;
+	}
+	
+	public FilamentSpool(Filament filament, BigDecimal purchasePrice,
+			BigDecimal initialWeightInGrams, LocalDate purchasedAt, 
+			BigDecimal remainingWeightInGrams) {
+		this(filament, purchasePrice, initialWeightInGrams, purchasedAt);
+		this.remainingWeightInGrams = remainingWeightInGrams;
 	}
 	
 	public UUID getId() {
@@ -88,6 +99,14 @@ public class FilamentSpool {
 
 	public void setPurchasedAt(LocalDate purchasedAt) {
 		this.purchasedAt = purchasedAt;
+	}
+
+	public BigDecimal getRemainingWeightInGrams() {
+		return remainingWeightInGrams;
+	}
+
+	public void setRemainingWeightInGrams(BigDecimal remainingWeightInGrams) {
+		this.remainingWeightInGrams = remainingWeightInGrams;
 	}
 
 	public Instant getCreatedAt() {
