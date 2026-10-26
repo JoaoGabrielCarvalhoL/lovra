@@ -11,9 +11,11 @@ import br.com.lovra.dto.filament.CreateFilamentRequest;
 import br.com.lovra.dto.filament.FilamentResponse;
 import br.com.lovra.dto.filament.UpdateFilamentRequest;
 import br.com.lovra.entity.Filament;
+import br.com.lovra.exception.FilamentInUseException;
 import br.com.lovra.exception.FilamentNotFoundException;
 import br.com.lovra.mapper.FilamentMapper;
 import br.com.lovra.repository.FilamentRepository;
+import br.com.lovra.repository.FilamentSpoolRepository;
 import br.com.lovra.service.FilamentService;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Page;
@@ -25,12 +27,15 @@ import jakarta.transaction.Transactional;
 public class FilamentServiceImpl implements FilamentService {
 
 	private final FilamentRepository filamentRepository; 
+	private final FilamentSpoolRepository filamentSpoolRepository;
 	private final FilamentMapper filamentMapper;
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
-	public FilamentServiceImpl(FilamentRepository filamentRepository, 
+	public FilamentServiceImpl(FilamentRepository filamentRepository,
+			FilamentSpoolRepository filamentSpoolRepository,
 			FilamentMapper filamentMapper) {
 		this.filamentRepository = filamentRepository;
+		this.filamentSpoolRepository = filamentSpoolRepository;
 		this.filamentMapper = filamentMapper;
 	}
 
@@ -71,10 +76,25 @@ public class FilamentServiceImpl implements FilamentService {
 	@Override
 	@Transactional
 	public FilamentResponse update(UUID id, UpdateFilamentRequest request) {
+		logger.info("Updating filament by id: {}", id);
 		Filament filament = this.filamentRepository.findByIdOptional(id)
 		.orElseThrow(() -> new FilamentNotFoundException("Filament not found with id: " + id));
 		this.filamentMapper.updateFilament(request, filament);
 		return filamentMapper.toFilamentResponse(filament);
+	}
+
+	@Override
+	@Transactional
+	public void delete(UUID id) {	
+		Filament filament = filamentRepository.findByIdOptional(id)
+				.orElseThrow(() -> new FilamentNotFoundException("Filament not found with id: " + id));
+		
+		if (filamentSpoolRepository.existsByFilamentId(id)) {
+		    throw new FilamentInUseException("Filament cannot be deleted because it has associated spools. Id: " + id);
+		}
+		
+		logger.info("Deleting by filament id: {}", id);
+		this.filamentRepository.delete(filament);
 	}
 
 }

@@ -42,7 +42,7 @@ class FilamentSpoolMapperTest {
 
     @Test
     void shouldUpdateExistingFilamentSpool() {
-    	UpdateFilamentSpoolRequest updateFilamentSpoolRequest = new UpdateFilamentSpoolRequest(new BigDecimal("110.00"), new BigDecimal("120.00"), LocalDate.of(2026, 10,1));
+    	UpdateFilamentSpoolRequest updateFilamentSpoolRequest = new UpdateFilamentSpoolRequest(new BigDecimal("110.00"), new BigDecimal("120.00"), LocalDate.of(2026, 10,1), new BigDecimal("120.00"));
     	Filament filament = new Filament("PLA Black Silk", "Voolt3D", "Black", FilamentType.PLA);
     	FilamentSpool filamentSpool = new FilamentSpool(filament, new BigDecimal("100.00"), new BigDecimal("100.00"), LocalDate.of(2026, 9,1));
     	this.filamentSpoolMapper.updateFilamentSpool(updateFilamentSpoolRequest, filamentSpool);

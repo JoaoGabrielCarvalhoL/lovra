@@ -16,6 +16,10 @@ public class FilamentSpoolRepository implements PanacheRepositoryBase<FilamentSp
         return find("filament.id", filamentId).list();
     }
 	
+	public boolean existsByFilamentId(UUID filamentId) {
+	    return count("filament.id", filamentId) > 0;
+	}
+	
 	public PanacheQuery<FilamentSpool> findQueryByFilamentId(UUID filamentId) {
 	    return find(
 	        "filament.id = ?1",

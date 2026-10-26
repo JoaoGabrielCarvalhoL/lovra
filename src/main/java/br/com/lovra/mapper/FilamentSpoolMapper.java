@@ -17,6 +17,7 @@ public interface FilamentSpoolMapper {
     @Mapping(target = "filament", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+	@Mapping(target = "remainingWeightInGrams", ignore = true)
     FilamentSpool toFilamentSpool(CreateFilamentSpoolRequest request);
 
     @Mapping(target = "filamentId", source = "filament.id")

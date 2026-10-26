@@ -48,6 +48,7 @@ public class FilamentSpoolServiceImpl implements FilamentSpoolService {
 		logger.info("Saving filamentSpool into database.");
 		FilamentSpool filamentSpool = this.filamentSpoolMapper.toFilamentSpool(request);
 		filamentSpool.setFilament(filament);
+		filamentSpool.setRemainingWeightInGrams(request.initialWeightInGrams());
 		
 		filamentSpoolRepository.persist(filamentSpool);
 		return filamentSpoolMapper.toFilamentSpoolResponse(filamentSpool);
@@ -64,7 +65,7 @@ public class FilamentSpoolServiceImpl implements FilamentSpoolService {
 	@Override
 	public PageResponse<FilamentSpoolResponse> findAllByFilamentId(UUID filamentId, int page, int size) {
 		logger.debug("Getting filament spools by filament ID: {}. Page: {}, size: {}", filamentId, page, size);
-		
+		System.out.println("FilamentSpoolResourceImpl reached: " + filamentId);
 		this.filamentRepository.findByIdOptional(filamentId)
 			.orElseThrow(() -> new FilamentNotFoundException("Filament not found with id: " + filamentId));
 		
@@ -81,6 +82,9 @@ public class FilamentSpoolServiceImpl implements FilamentSpoolService {
 	@Transactional
 	@Override
 	public void update(UUID id, UpdateFilamentSpoolRequest request) {
+		if (request.remainingWeightInGrams().compareTo(request.initialWeightInGrams()) > 0) {
+		    throw new IllegalArgumentException("Remaining weight cannot exceed initial weight.");
+		}
 		FilamentSpool filamentSpool = this.filamentSpoolRepository.findByIdOptional(id)
 			.orElseThrow(() -> new  FilamentSpoolNotFoundException("Filament Spool not found with id: " + id));
 		filamentSpoolMapper.updateFilamentSpool(request, filamentSpool);

@@ -13,7 +13,7 @@ public record CreateFilamentSpoolRequest(
     BigDecimal purchasePrice,
 
     @NotNull(message = "The field initialWeightInGrams cannot be null.")
-    @Positive@Positive(message = "The initialWeightInGrams field only accepts positive values.")
+    @Positive(message = "The initialWeightInGrams field only accepts positive values.")
     BigDecimal initialWeightInGrams,
 
     @NotNull(message = "The field purchasedAt cannot be null.")
